@@ -4,6 +4,7 @@ use pyo3::wrap_pyfunction;
 #[pymodule]
 fn pykk(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_wrapped(wrap_pyfunction!(real2imag))?;
+    m.add_wrapped(wrap_pyfunction!(imag2real))?;
     Ok(())
 }
 
@@ -17,6 +18,19 @@ fn real2imag(x: Vec<f64>, y: Vec<f64>) -> PyResult<Vec<f64>> {
     }
 
     Ok(result)
+}
+
+#[pyfunction]
+fn imag2real(x: Vec<f64>, y: Vec<f64>) -> PyResult<Vec<f64>> {
+    const PI: f64 = 3.141592653589;
+    let mut result = vec![0.0; y.len()];
+
+    for i in 0..x.len() {
+        result[i] = 2.0 / PI * integrate(&x, &y, i);
+    }
+
+    Ok(result)
+
 }
 
 fn integrate(x: &Vec<f64>, y: &Vec<f64>, num: usize) -> f64{
