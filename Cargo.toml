@@ -15,4 +15,3 @@ features = ["extension-module"]
 version = "0.13.2"
 
 [dependencies]
-num-traits = "0.2.14"
