@@ -1,11 +1,26 @@
 # pykk
 
+Python library for calculating Kramers-Kronig transform written in Rust
+
+## Requirements
+For build:
+
+- Rust 1.50.0
+
+For use:
+- Python 3.6+
+
 ## build
+
+In your shell, run the following command
+```
+$ cargo build --release
+```
 
 - Linux
 
-Build and rename `target/release/libpykk.so` to `target/release/pykk.so`
+Rename `target/release/libpykk.so` to `target/release/pykk.so`
 
 - Windows
 
-Build and rename `target/release/pykk.dll` to `target/release/pykk.pyd`
+Rename `target/release/pykk.dll` to `target/release/pykk.pyd`

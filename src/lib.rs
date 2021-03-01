@@ -6,6 +6,7 @@ use num_traits::{NumAssign, NumCast};
 #[pymodule]
 fn pykk(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_wrapped(wrap_pyfunction!(real2imag))?;
+    m.add_wrapped(wrap_pyfunction!(imag2real))?;
     Ok(())
 }
 
