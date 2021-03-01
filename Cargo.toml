@@ -1,17 +1,18 @@
 [package]
-name = "pykk"
-version = "0.1.0"
 authors = ["Yudai Hayashi <yudai0913haya@gmail.com>"]
 edition = "2018"
+name = "pykk"
+version = "0.1.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [lib]
-name = "pykk"
 crate-type = ["cdylib"]
+name = "pykk"
 
 [dependencies.pyo3]
-version = "0.13.2"
 features = ["extension-module"]
+version = "0.13.2"
 
 [dependencies]
+num-traits = "0.2.14"
