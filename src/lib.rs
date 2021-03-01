@@ -35,7 +35,7 @@ fn imag2real(x: &PyList, y: &PyList) -> PyResult<Vec<f64>> {
 
 fn integrate(x: &PyList, y: &PyList, num: usize) -> f64 {
     let xx: Vec<f64> = x.as_ref().extract().unwrap();
-    let yy: Vec<f64> = x.as_ref().extract().unwrap();
+    let yy: Vec<f64> = y.as_ref().extract().unwrap();
 
     let mut result = 0.0;
     let diff = xx[1] - xx[0];
