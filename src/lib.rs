@@ -1,6 +1,6 @@
 use pyo3::prelude::*;
-use pyo3::types::PyList;
 use pyo3::wrap_pyfunction;
+use std::f64::consts::PI;
 
 #[pymodule]
 fn pykk(_py: Python, m: &PyModule) -> PyResult<()> {
@@ -10,8 +10,7 @@ fn pykk(_py: Python, m: &PyModule) -> PyResult<()> {
 }
 
 #[pyfunction]
-fn real2imag(x: &PyList, y: &PyList) -> PyResult<Vec<f64>> {
-    const PI: f64 = 3.141592653589;
+fn real2imag(x: Vec<f64>, y: Vec<f64>) -> PyResult<Vec<f64>> {
     let mut result = vec![0.0; y.len()];
 
     for i in 0..x.len() {
@@ -22,8 +21,7 @@ fn real2imag(x: &PyList, y: &PyList) -> PyResult<Vec<f64>> {
 }
 
 #[pyfunction]
-fn imag2real(x: &PyList, y: &PyList) -> PyResult<Vec<f64>> {
-    const PI: f64 = 3.141592653589;
+fn imag2real(x: Vec<f64>, y: Vec<f64>) -> PyResult<Vec<f64>> {
     let mut result = vec![0.0; y.len()];
 
     for i in 0..x.len() {
@@ -33,18 +31,15 @@ fn imag2real(x: &PyList, y: &PyList) -> PyResult<Vec<f64>> {
     Ok(result)
 }
 
-fn integrate(x: &PyList, y: &PyList, num: usize) -> f64 {
-    let xx: Vec<f64> = x.as_ref().extract().unwrap();
-    let yy: Vec<f64> = y.as_ref().extract().unwrap();
-
+fn integrate(x: &Vec<f64>, y: &Vec<f64>, num: usize) -> f64 {
     let mut result = 0.0;
-    let diff = xx[1] - xx[0];
+    let diff = x[1] - x[0];
 
     for i in 0..x.len() {
         if i == num {
             continue;
         }
-        result += xx[num] * yy[i] / (xx[i] * xx[i] - xx[num] * xx[num]) * diff;
+        result += x[num] * y[i] / (x[i] * x[i] - x[num] * x[num]) * diff;
     }
 
     result
