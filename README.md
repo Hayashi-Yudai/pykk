@@ -30,7 +30,7 @@ Rename `target/release/pykk.dll` to `target/release/pykk.pyd`
 
 ## How to use
 
-In using this package in your Python code, download binary(pykk.so for Linux and pykk.pyd for Windows) and put it on the same directory with your Python code.
+In using this package in your Python code, [download binary](https://github.com/Hayashi-Yudai/pykk/releases/tag/v0.1.1)(pykk.so for Linux and pykk.pyd for Windows) and put it on the same directory with your Python code.
 
 ```python
 import pykk
