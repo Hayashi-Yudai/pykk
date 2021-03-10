@@ -9,6 +9,7 @@ fn pykk(_py: Python, m: &PyModule) -> PyResult<()> {
     Ok(())
 }
 
+/// Calculate the imaginary part from the real part
 #[pyfunction]
 fn real2imag(x: Vec<f64>, y: Vec<f64>) -> PyResult<Vec<f64>> {
     let mut result = vec![0.0; y.len()];
@@ -20,6 +21,7 @@ fn real2imag(x: Vec<f64>, y: Vec<f64>) -> PyResult<Vec<f64>> {
     Ok(result)
 }
 
+/// Calculate the real part from the imaginary part
 #[pyfunction]
 fn imag2real(x: Vec<f64>, y: Vec<f64>) -> PyResult<Vec<f64>> {
     let mut result = vec![0.0; y.len()];
@@ -31,6 +33,9 @@ fn imag2real(x: Vec<f64>, y: Vec<f64>) -> PyResult<Vec<f64>> {
     Ok(result)
 }
 
+/// The main part of the Kramers-Kronig transform.
+/// The argument `x` should have narrow enough steps and
+/// the space should be equal.
 fn integrate(x: &Vec<f64>, y: &Vec<f64>, num: usize) -> f64 {
     let mut result = 0.0;
     let diff = x[1] - x[0];
