@@ -18,7 +18,7 @@ fn real2imag(x: Vec<f64>, y: Vec<f64>) -> PyResult<Vec<f64>> {
     let mut result = vec![0.0; y.len()];
 
     for i in 0..x.len() {
-        result[i] = -2.0 / PI * integrate(&x, &y, i);
+        result[i] = -2.0 / PI * real2imag_helper(&x, &y, i);
     }
 
     Ok(result)
@@ -33,16 +33,16 @@ fn imag2real(x: Vec<f64>, y: Vec<f64>) -> PyResult<Vec<f64>> {
     let mut result = vec![0.0; y.len()];
 
     for i in 0..x.len() {
-        result[i] = 2.0 / PI * integrate(&x, &y, i);
+        result[i] = 2.0 / PI * imag2real_helper(&x, &y, i);
     }
 
     Ok(result)
 }
 
-/// The main part of the Kramers-Kronig transform.
+/// The main part of the Kramers-Kronig transform from real part to imaginary part.
 /// The argument `x` should have narrow enough steps and
 /// the space should be equal.
-fn integrate(x: &Vec<f64>, y: &Vec<f64>, num: usize) -> f64 {
+fn real2imag_helper(x: &Vec<f64>, y: &Vec<f64>, num: usize) -> f64 {
     let mut result = 0.0;
     let diff = x[1] - x[0];
 
@@ -51,6 +51,23 @@ fn integrate(x: &Vec<f64>, y: &Vec<f64>, num: usize) -> f64 {
             continue;
         }
         result += x[num] * y[i] / (x[i] * x[i] - x[num] * x[num]) * diff;
+    }
+
+    result
+}
+
+/// The main part of the Kramers-Kronig transform from imaginary part to real part.
+/// The argument `x` should have narrow enough steps and
+/// the space should be equal.
+fn imag2real_helper(x: &Vec<f64>, y: &Vec<f64>, num: usize) -> f64 {
+    let mut result = 0.0;
+    let diff = x[1] - x[0];
+
+    for i in 0..x.len() {
+        if i == num {
+            continue;
+        }
+        result += x[i] * y[i] / (x[i] * x[i] - x[num] * x[num]) * diff;
     }
 
     result
