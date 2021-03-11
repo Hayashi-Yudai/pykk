@@ -46,11 +46,13 @@ fn real2imag_helper(x: &Vec<f64>, y: &Vec<f64>, num: usize) -> f64 {
     let mut result = 0.0;
     let diff = x[1] - x[0];
 
-    for i in 0..x.len() {
-        if i == num {
+    let base = x[num];
+
+    for (xx, yy) in x.iter().zip(y.iter()) {
+        if *xx == base {
             continue;
         }
-        result += x[num] * y[i] / (x[i] * x[i] - x[num] * x[num]) * diff;
+        result += base * yy / (xx * xx - base * base) * diff;
     }
 
     result
@@ -63,11 +65,13 @@ fn imag2real_helper(x: &Vec<f64>, y: &Vec<f64>, num: usize) -> f64 {
     let mut result = 0.0;
     let diff = x[1] - x[0];
 
-    for i in 0..x.len() {
-        if i == num {
+    let base = x[num];
+
+    for (xx, yy) in x.iter().zip(y.iter()) {
+        if *xx == x[num] {
             continue;
         }
-        result += x[i] * y[i] / (x[i] * x[i] - x[num] * x[num]) * diff;
+        result += xx * yy / (xx * xx - base * base) * diff;
     }
 
     result
