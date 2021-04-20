@@ -2,9 +2,10 @@
 authors = ["Yudai Hayashi <yudai0913haya@gmail.com>"]
 edition = "2018"
 name = "pykk"
-version = "0.1.0"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+version = "0.1.2"
+raedme = "README.md"
+homepage = "http://github.com/Hayashi-Yudai/pykk"
+license = "Apache-2.0"
 
 [lib]
 crate-type = ["cdylib"]

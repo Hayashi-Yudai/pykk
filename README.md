@@ -30,7 +30,13 @@ Rename `target/release/pykk.dll` to `target/release/pykk.pyd`
 
 ## How to use
 
-In using this package in your Python code, [download binary](https://github.com/Hayashi-Yudai/pykk/releases/tag/v0.1.1)(pykk.so for Linux and pykk.pyd for Windows) and put it on the same directory with your Python code.
+In Windows system, you can install with pip command
+
+```bash
+pip install pykk
+```
+
+MacOS or Linux users should build from source.
 
 ```python
 import pykk
@@ -48,3 +54,7 @@ Compare the performance with the code implemented by Pyhon. The length of the da
 | Python 3.8 | pykk |
 | ---------- | ---- |
 | 37 s       | 7 ms |
+
+
+## Licence
+This application contains artifacts distributed under the license of the Apache License, Version 2.0.
