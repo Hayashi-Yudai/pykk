@@ -1,4 +1,5 @@
 # pykk
+[![Downloads](https://pepy.tech/badge/pykk)](https://pepy.tech/project/pykk)
 
 Python library for calculating Kramers-Kronig transform written in Rust
 
