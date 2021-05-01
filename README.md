@@ -44,7 +44,7 @@ MacOS or Linux users should build from source.
 ```python
 import pykk
 
-energy = [1, 2, 3, 4]
+energy = [1, 2, 3, 4]  # the values MUST have the same intervals
 real = [1, 2, 3, 4]
 
 imag = pykk.real2imag(energy, real)
@@ -56,7 +56,7 @@ Compare the performance with the code implemented by Pyhon. The length of the da
 
 | Python 3.8 | pykk |
 | ---------- | ---- |
-| 37 s       | 7 ms |
+| 37 s       | 0.4 ms |
 
 
 ## Licence
