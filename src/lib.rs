@@ -1,6 +1,10 @@
+mod kk;
+
 use pyo3::prelude::*;
 use pyo3::wrap_pyfunction;
 use std::f64::consts::PI;
+
+use kk::kk::{real2imag_helper, imag2real_helper};
 
 #[pymodule]
 fn pykk(_py: Python, m: &PyModule) -> PyResult<()> {
@@ -39,40 +43,3 @@ fn imag2real(x: Vec<f64>, y: Vec<f64>) -> PyResult<Vec<f64>> {
     Ok(result)
 }
 
-/// The main part of the Kramers-Kronig transform from real part to imaginary part.
-/// The argument `x` should have narrow enough steps and
-/// the space should be equal.
-fn real2imag_helper(x: &Vec<f64>, y: &Vec<f64>, num: usize) -> f64 {
-    let mut result = 0.0;
-    let diff = x[1] - x[0];
-
-    let base = x[num];
-
-    for (xx, yy) in x.iter().zip(y.iter()) {
-        if *xx == base {
-            continue;
-        }
-        result += base * yy / (xx * xx - base * base) * diff;
-    }
-
-    result
-}
-
-/// The main part of the Kramers-Kronig transform from imaginary part to real part.
-/// The argument `x` should have narrow enough steps and
-/// the space should be equal.
-fn imag2real_helper(x: &Vec<f64>, y: &Vec<f64>, num: usize) -> f64 {
-    let mut result = 0.0;
-    let diff = x[1] - x[0];
-
-    let base = x[num];
-
-    for (xx, yy) in x.iter().zip(y.iter()) {
-        if *xx == x[num] {
-            continue;
-        }
-        result += xx * yy / (xx * xx - base * base) * diff;
-    }
-
-    result
-}
