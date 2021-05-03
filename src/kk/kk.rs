@@ -3,11 +3,19 @@ use std::thread;
 use std::f64::consts::PI;
 
 use pyo3::prelude::*;
+use pyo3::exceptions::PyValueError;
+
+use crate::kk::utils::has_same_interval;
 
 pub fn kk_transform<F>(x: Vec<f64>, y: Vec<f64>, f: F) -> PyResult<Vec<f64>>
     where F: Fn(&Vec<f64>, &Vec<f64>, usize) -> f64,
           F: Send + Copy + 'static
 {
+    // TODO: interpolate if has different intervals
+    if !has_same_interval(&x) {
+        return Err(PyValueError::new_err("x should have the same interval"));
+    }
+
     let thread_num = 16;
     let mut handles: Vec<thread::JoinHandle<()>> = Vec::new();
     let mut result: Arc<Vec<Mutex<f64>>> = Arc::new(
