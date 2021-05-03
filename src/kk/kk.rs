@@ -4,20 +4,11 @@ use std::f64::consts::PI;
 
 use pyo3::prelude::*;
 
-pub enum Direction {
-    REAL2IMAG,
-    IMAG2REAL
-}
-
-pub fn kk_transform<F>(x: Vec<f64>, y: Vec<f64>, f: F, direction: Direction) -> PyResult<Vec<f64>>
+pub fn kk_transform<F>(x: Vec<f64>, y: Vec<f64>, f: F) -> PyResult<Vec<f64>>
     where F: Fn(&Vec<f64>, &Vec<f64>, usize) -> f64,
           F: Send + Copy + 'static
 {
     let thread_num = 16;
-    let sign = match direction {
-        Direction::REAL2IMAG => 1.0,
-        Direction::IMAG2REAL => -1.0,
-    };
     let mut handles: Vec<thread::JoinHandle<()>> = Vec::new();
     let mut result: Arc<Vec<Mutex<f64>>> = Arc::new(
         vec![0.0; y.len()]
@@ -34,7 +25,7 @@ pub fn kk_transform<F>(x: Vec<f64>, y: Vec<f64>, f: F, direction: Direction) -> 
         let handle = thread::spawn(move || {
             for j in x.len()*i/thread_num..x.len()*(i+1)/thread_num {
                 let mut val = result[j].lock().unwrap();
-                *val = sign * 2.0 / PI * f(&x, &y, j);
+                *val = 2.0 / PI * f(&x, &y, j);
             }
         });
 
@@ -89,7 +80,7 @@ pub fn imag2real_helper(x: &Vec<f64>, y: &Vec<f64>, num: usize) -> f64 {
         if *xx == x[num] {
             continue;
         }
-        result += xx * yy / (xx * xx - base * base) * diff;
+        result -= xx * yy / (xx * xx - base * base) * diff;
     }
 
     result

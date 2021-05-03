@@ -3,7 +3,7 @@ mod kk;
 use pyo3::prelude::*;
 use pyo3::wrap_pyfunction;
 
-use kk::kk::{real2imag_helper, imag2real_helper, kk_transform, Direction};
+use kk::kk::{real2imag_helper, imag2real_helper, kk_transform};
 
 #[pymodule]
 fn pykk(_py: Python, m: &PyModule) -> PyResult<()> {
@@ -19,8 +19,7 @@ fn pykk(_py: Python, m: &PyModule) -> PyResult<()> {
 /// * `y` - dependent variable (ex. conductivity or permittivity)
 #[pyfunction]
 fn real2imag(x: Vec<f64>, y: Vec<f64>) -> PyResult<Vec<f64>> {
-    let direction = Direction::REAL2IMAG;
-    kk_transform(x, y, real2imag_helper, direction)
+    kk_transform(x, y, real2imag_helper)
 }
 
 /// Calculate the real part from the imaginary part
@@ -29,7 +28,6 @@ fn real2imag(x: Vec<f64>, y: Vec<f64>) -> PyResult<Vec<f64>> {
 /// * `y` - dependent variable (ex. conductivity or permittivity)
 #[pyfunction]
 fn imag2real(x: Vec<f64>, y: Vec<f64>) -> PyResult<Vec<f64>> {
-    let direction = Direction::IMAG2REAL;
-    kk_transform(x, y, imag2real_helper, direction)
+    kk_transform(x, y, imag2real_helper)
 }
 
