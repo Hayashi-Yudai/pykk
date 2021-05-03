@@ -60,7 +60,7 @@ pub fn real2imag_helper(x: &Vec<f64>, y: &Vec<f64>, num: usize) -> f64 {
         if *xx == base {
             continue;
         }
-        result += base * yy / (xx * xx - base * base) * diff;
+        result -= base * yy / (xx * xx - base * base) * diff;
     }
 
     result
@@ -80,7 +80,7 @@ pub fn imag2real_helper(x: &Vec<f64>, y: &Vec<f64>, num: usize) -> f64 {
         if *xx == x[num] {
             continue;
         }
-        result -= xx * yy / (xx * xx - base * base) * diff;
+        result += xx * yy / (xx * xx - base * base) * diff;
     }
 
     result
