@@ -34,7 +34,7 @@ Rename `target/release/libpykk.so` to `target/release/pykk.so`, and put .so file
 
 ### Windows
 
-Rename `target/release/pykk.dll` to `target/release/pykk.pyd`, and put .so file in the same directory with the python source.
+Rename `target/release/pykk.dll` to `target/release/pykk.pyd`, and put .pyd file in the same directory with the python source.
 
 ### 
 
