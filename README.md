@@ -3,43 +3,44 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![PyPI version shields.io](https://img.shields.io/pypi/v/pykk.svg)](https://pypi.python.org/pypi/pykk/)
 
-Python library for calculating Kramers-Kronig transform written in Rust
+Python library for calculating Kramers-Kronig transform written in Rust.
 
 ## Requirements
 
-For build:
+- Rust 1.50.0 (for build)
 
-- Rust 1.50.0
+- Python 3.6 ~ 3.9 (For use)
 
-For use:
+## Install
+If you use Windows, you can install with pip command.
 
-- Python 3.6+
+```bash
+$ pip install pykk
+```
+
+If not, you can install Rust and build from the source.
 
 ## build
 
 If you want to build from source, run the following command in your shell
 
-```
+```bash
 $ cargo build --release
 ```
 
-- Linux
+### Linux
 
-Rename `target/release/libpykk.so` to `target/release/pykk.so`
+Rename `target/release/libpykk.so` to `target/release/pykk.so`, and put .so file in the same directory with the python source.
 
-- Windows
+### Windows
 
-Rename `target/release/pykk.dll` to `target/release/pykk.pyd`
+Rename `target/release/pykk.dll` to `target/release/pykk.pyd`, and put .so file in the same directory with the python source.
+
+### 
 
 ## How to use
 
-In Windows system, you can install with pip command
-
-```bash
-pip install pykk
-```
-
-MacOS or Linux users should build from source.
+This library has two functions for calculating Kramers-Kronig transform, the transformation from real to imaginary part and vice versa.
 
 ```python
 import pykk
@@ -47,17 +48,18 @@ import pykk
 energy = [1, 2, 3, 4]  # the values MUST have the same intervals
 real = [1, 2, 3, 4]
 
-imag = pykk.real2imag(energy, real)
+imag = pykk.real2imag(energy, real)  # real -> imaginary part
+real_kk = pykk.imag2real(energy, imag)  # imaginary -> real part
 ```
 
 ## Performance
 
-Compare the performance with the code implemented by Pyhon. The length of the data is ~ 1000 data points.
+Compare the performance with the code implemented by Python. The length of the data is ~ 1000 data points.
 
 | Python 3.8 | pykk |
 | ---------- | ---- |
 | 37 s       | 0.4 ms |
 
 
-## Licence
+## License
 This application contains artifacts distributed under the license of the Apache License, Version 2.0.

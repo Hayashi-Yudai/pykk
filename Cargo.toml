@@ -2,10 +2,10 @@
 authors = ["Yudai Hayashi <yudai0913haya@gmail.com>"]
 description = "The fast Kramers-Kronig transform"
 edition = "2018"
+readme = "README.md"
 homepage = "http://github.com/Hayashi-Yudai/pykk"
 license = "Apache-2.0"
 name = "pykk"
-raedme = "README.md"
 version = "0.1.3"
 
 [lib]
