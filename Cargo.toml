@@ -6,7 +6,7 @@ readme = "README.md"
 homepage = "http://github.com/Hayashi-Yudai/pykk"
 license = "Apache-2.0"
 name = "pykk"
-version = "0.1.3"
+version = "0.1.4"
 
 [lib]
 crate-type = ["cdylib"]
