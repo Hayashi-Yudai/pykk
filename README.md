@@ -8,12 +8,12 @@ Python library for calculating Kramers-Kronig transform written in Rust.
 
 ## Requirements
 
-- Rust 1.50.0 (for build)
+- Rust 1.56.0 (for build)
 
-- Python 3.6 ~ 3.9 (For use)
+- Python 3.6 ~ 3.10 (For use)
 
 ## Install
-If you use Windows, you can install with pip command.
+If you use Windows or Linux, you can install with pip command.
 
 ```bash
 $ pip install pykk
