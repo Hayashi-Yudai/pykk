@@ -20,3 +20,31 @@ jobs:
                 command: sdist
                 args: >
                     --out dist
+    build-wheels:
+        runs-on: ${{ matrix.os }}
+        strategy:
+            fail-fast: false
+            matrix:
+                package: [pykk]
+                os: [ubuntu-latest, macos-latest, windows-32gb-ram]
+                architecture: [x86-64, aarch64]
+                exclude:
+                    - os: windows-32gb-ram
+                      architecture: aarch64
+    
+        steps:
+            - uses: actions/checkout@v4
+    
+            - name: Set up Python
+              uses: actions/setup-python@v5
+              with:
+                python-version: '3.10'
+    
+            - name: Build wheel
+              uses: PyO3/maturin-action@v1
+              with:
+                command: build
+                args: >
+                    --release
+                    --out dist
+                    manylinux: ${{ matrix.architecture == 'aarch64' && '2_24' || 'auto' }}
