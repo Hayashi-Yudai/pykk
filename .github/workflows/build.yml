@@ -47,4 +47,3 @@ jobs:
                 args: >
                     --release
                     --out dist
-                    manylinux: ${{ matrix.architecture == 'aarch64' && '2_24' || 'auto' }}
