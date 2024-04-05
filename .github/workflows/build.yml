@@ -14,12 +14,20 @@ jobs:
               uses: actions/setup-python@v5
               with:
                 python-version: '3.10'
+
             - name: Create source distribution
               uses: PyO3/maturin-action@v1
               with:
                 command: sdist
                 args: >
                     --out dist
+
+            - name: Upload wheel
+              uses: actions/upload-artifact@v4
+              with:
+                name: sdist-pykk
+                path: dist/*.tar.gz
+
     build-wheels:
         runs-on: ${{ matrix.os }}
         strategy:
@@ -47,3 +55,30 @@ jobs:
                 args: >
                     --release
                     --out dist
+
+            - name: Upload wheel
+              uses: actions/upload-artifact@v4
+              with:
+                name: wheel-${{ matrix.package }}-${{ matrix.os }}-${{ matrix.architecture }}
+                path: dist/*.whl
+    publish-to-pypi:
+        needs: [create-sdist, build-wheels]
+        runs-on: ubuntu-latest
+        environment:
+            name: testpypi
+            url: https://test.pypi.org/p/pykk
+        permissions:
+            id-token: write
+    
+        steps:
+            - name: Download sdists and wheels
+              uses: actions/download-artifact@v4
+              with:
+                path: dist
+                merge-multiple: true
+    
+            - name: Publish to PyPI
+              uses: pypa/gh-action-pypi-publish@release/v1
+              with:
+                repository-url: https://test.pypi.org/legacy/
+                verbose: true
