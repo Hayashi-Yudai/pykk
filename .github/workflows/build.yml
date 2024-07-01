@@ -1,84 +1,94 @@
-name: Release
+name: Python
 
 on:
-    push:
-        branches: [ main ]
-    pull_request:
-        branches: [ main ]
+  push:
+  pull_request:
+
 jobs:
-    create-sdist:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v4
-            - name: Set up Python
-              uses: actions/setup-python@v5
-              with:
-                python-version: '3.10'
+  macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+          architecture: x64
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Build wheels - x86_64
+        uses: PyO3/maturin-action@v1
+        with:
+          target: x86_64
+          args: --release --out dist --sdist -m python/Cargo.toml
+      - name: Install built wheel - x86_64
+        run: |
+          pip install crfs --no-index --find-links dist --force-reinstall
+          python -c "import crfs"
+      - name: Build wheels - universal2
+        uses: PyO3/maturin-action@v1
+        with:
+          target: universal2-apple-darwin
+          args: --release --out dist -m python/Cargo.toml
+      - name: Install built wheel - universal2
+        run: |
+          pip install crfs --no-index --find-links dist --force-reinstall
+          python -c "import crfs"
+      - name: Upload wheels
+        uses: actions/upload-artifact@v3
+        with:
+          name: wheels
+          path: dist
 
-            - name: Create source distribution
-              uses: PyO3/maturin-action@v1
-              with:
-                command: sdist
-                args: >
-                    --out dist
+  windows:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        target: [x64, x86]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+          architecture: ${{ matrix.target }}
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Build wheels
+        uses: PyO3/maturin-action@v1
+        with:
+          target: ${{ matrix.target }}
+          args: --release --out dist -m python/Cargo.toml
+      - name: Install built wheel
+        run: |
+          pip install crfs --no-index --find-links dist --force-reinstall
+          python -c "import crfs"
+      - name: Upload wheels
+        uses: actions/upload-artifact@v3
+        with:
+          name: wheels
+          path: dist
 
-            - name: Upload wheel
-              uses: actions/upload-artifact@v4
-              with:
-                name: sdist-pykk
-                path: dist/*.tar.gz
-
-    build-wheels:
-        runs-on: ${{ matrix.os }}
-        strategy:
-            fail-fast: false
-            matrix:
-                package: [pykk]
-                os: [ubuntu-latest, macos-latest, windows-32gb-ram]
-                architecture: [x86-64, aarch64]
-                exclude:
-                    - os: windows-32gb-ram
-                      architecture: aarch64
-    
-        steps:
-            - uses: actions/checkout@v4
-    
-            - name: Set up Python
-              uses: actions/setup-python@v5
-              with:
-                python-version: '3.10'
-    
-            - name: Build wheel
-              uses: PyO3/maturin-action@v1
-              with:
-                command: build
-                args: >
-                    --release
-                    --out dist
-
-            - name: Upload wheel
-              uses: actions/upload-artifact@v4
-              with:
-                name: wheel-${{ matrix.package }}-${{ matrix.os }}-${{ matrix.architecture }}
-                path: dist/*.whl
-    publish-to-pypi:
-        needs: [create-sdist, build-wheels]
-        runs-on: ubuntu-latest
-        environment:
-            name: testpypi
-            url: https://test.pypi.org/p/pykk
-        permissions:
-            id-token: write
-    
-        steps:
-            - name: Download sdists and wheels
-              uses: actions/download-artifact@v4
-              with:
-                path: dist
-                merge-multiple: true
-    
-            - name: Publish to PyPI
-              uses: pypa/gh-action-pypi-publish@release/v1
-              with:
-                repository-url: https://test.pypi.org/legacy/
-                verbose: true
+  linux:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: [x86_64, i686]
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+        architecture: x64
+    - name: Build wheels
+      uses: PyO3/maturin-action@v1
+      with:
+        target: ${{ matrix.target }}
+        manylinux: auto
+        args: --release --out dist -m python/Cargo.toml
+    - name: Install built wheel
+      if: matrix.target == 'x86_64'
+      run: |
+        pip install crfs --no-index --find-links dist --force-reinstall
+        python -c "import crfs"
+    - name: Upload wheels
+      uses: actions/upload-artifact@v3
+      with:
+        name: wheels
+        path: dist
