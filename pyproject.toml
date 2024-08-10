@@ -1,0 +1,23 @@
+[build-system]
+requires = ["maturin>=1,<2"]
+build-backend = "maturin"
+
+[project]
+name = "pykk"
+requires-python = ">=3.9,<3.13"
+classifiers = [
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+]
+
+[tool.poetry]
+name = "pykk"
+version = "0.1.5"
+description = ""
+authors = ["yudai0913haya@gmail.com"]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.13"
+maturin = "^1.7.0"
+ziglang = "^0.13.0"

@@ -1,14 +1,14 @@
 mod kk;
 
 use pyo3::prelude::*;
-use pyo3::wrap_pyfunction;
 
 use kk::kk::{real2imag_helper, imag2real_helper, kk_transform};
 
 #[pymodule]
-fn pykk(_py: Python, m: &PyModule) -> PyResult<()> {
-    m.add_wrapped(wrap_pyfunction!(real2imag))?;
-    m.add_wrapped(wrap_pyfunction!(imag2real))?;
+fn pykk(m: &Bound<'_, PyModule>) -> PyResult<()> {
+    let _ = m.add_function(wrap_pyfunction!(real2imag, m)?);
+    let _ = m.add_function(wrap_pyfunction!(imag2real, m)?);
+
     Ok(())
 }
 

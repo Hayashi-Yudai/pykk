@@ -1,19 +1,19 @@
 [package]
 authors = ["Yudai Hayashi <yudai0913haya@gmail.com>"]
 description = "The fast Kramers-Kronig transform"
-edition = "2018"
+edition = "2021"
 readme = "README.md"
 homepage = "http://github.com/Hayashi-Yudai/pykk"
 license = "Apache-2.0"
 name = "pykk"
-version = "0.1.4"
+version = "0.1.5"
 
 [lib]
 crate-type = ["cdylib"]
 name = "pykk"
 
-[dependencies.pyo3]
-features = ["extension-module"]
-version = "0.13.2"
-
 [dependencies]
+pyo3 = { version = "0.21.2", features = [
+    "extension-module",
+    "generate-import-lib",
+] }
