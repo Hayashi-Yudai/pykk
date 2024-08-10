@@ -4,7 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "pykk"
-requires-python = ">=3.9"
+requires-python = ">=3.9,<3.13"
 classifiers = [
     "Programming Language :: Rust",
     "Programming Language :: Python :: Implementation :: CPython",
@@ -20,3 +20,4 @@ authors = ["yudai0913haya@gmail.com"]
 [tool.poetry.dependencies]
 python = ">=3.9,<3.13"
 maturin = "^1.7.0"
+ziglang = "^0.13.0"
