@@ -8,9 +8,7 @@ Python library for calculating Kramers-Kronig transform written in Rust.
 
 ## Requirements
 
-- Rust 1.56.0 (for build)
-
-- Python 3.6 ~ 3.10 (For use)
+- Python >=3.9,< 3.13
 
 ## Install
 If you use Windows or Linux, you can install with pip command.
@@ -23,21 +21,14 @@ If not, you can install Rust and build from the source.
 
 ## build
 
-If you want to build from source, run the following command in your shell
+If you want to build from source, you need maturin. I prepare virtual environment with poetry for building.
 
 ```bash
-$ cargo build --release
+$ poetry install
+$ poetry run maturin build --release
 ```
 
-### Linux
-
-Rename `target/release/libpykk.so` to `target/release/pykk.so`, and put .so file in the same directory with the python source.
-
-### Windows
-
-Rename `target/release/pykk.dll` to `target/release/pykk.pyd`, and put .pyd file in the same directory with the python source.
-
-### 
+You can see `.whl` file in `$PROJECT_ROOT/target/wheels`. Install it by pip command.
 
 ## How to use
 
