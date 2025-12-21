@@ -4,6 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "pykk"
+version = "0.1.6"
 requires-python = ">=3.10,<3.15"
 classifiers = [
     "Programming Language :: Rust",
@@ -11,13 +12,8 @@ classifiers = [
     "Programming Language :: Python :: Implementation :: PyPy",
 ]
 
-[tool.poetry]
-name = "pykk"
-version = "0.1.6"
-description = ""
-authors = ["yudai0913haya@gmail.com"]
-
-[tool.poetry.dependencies]
-python = ">=3.10,<3.15"
-maturin = "^1.7.0"
-ziglang = "^0.13.0"
+[dependency-groups]
+dev = [
+    "maturin>=1.7.0",
+    "ziglang>=0.13.0",
+]
