@@ -94,7 +94,7 @@ jobs:
             target: x64
           - runner: windows-latest
             target: x86
-        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
+        python-version: ['3.9', '3.10', '3.11', '3.12']
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
