@@ -16,7 +16,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   linux:
@@ -167,3 +167,8 @@ jobs:
         with:
           command: upload
           args: --non-interactive --skip-existing wheels-*/*
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: wheels-*/*
+          generate_release_notes: true
