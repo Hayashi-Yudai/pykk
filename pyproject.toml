@@ -5,6 +5,8 @@ build-backend = "maturin"
 [project]
 name = "pykk"
 version = "0.1.7"
+description = "Fast Kramers-Kronig transform library written in Rust"
+readme = "README.md"
 requires-python = ">=3.10,<3.15"
 classifiers = [
     "Programming Language :: Rust",
