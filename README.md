@@ -8,7 +8,7 @@ Python library for calculating Kramers-Kronig transform written in Rust.
 
 ## Requirements
 
-- Python >=3.9,< 3.13
+- Python >=3.10, <3.15
 
 ## Install
 You can install with pip command.
@@ -21,11 +21,11 @@ Or build from the source.
 
 ## build
 
-Use maturin for building. If you use poetry, you can build by the following commands.
+Use maturin for building.
 
 ```bash
-$ poetry install
-$ poetry run maturin build --release
+$ uv sync
+$ uv run maturin build --release
 ```
 
 You can find `.whl` file in `$PROJECT_ROOT/target/wheels`. Install it by pip command.
