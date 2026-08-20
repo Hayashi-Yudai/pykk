@@ -11,6 +11,13 @@ pub fn kk_transform<F>(x: Vec<f64>, y: Vec<f64>, f: F) -> PyResult<Vec<f64>>
     where F: Fn(&Vec<f64>, &Vec<f64>, usize) -> f64,
           F: Send + Copy + 'static
 {
+    if x.len() != y.len() {
+        return Err(PyValueError::new_err("x and y should have the same length"));
+    }
+    if x.len() < 2 {
+        return Err(PyValueError::new_err("x should have at least two elements"));
+    }
+
     // TODO: interpolate if has different intervals
     if !has_same_interval(&x) {
         return Err(PyValueError::new_err("x should have the same interval"));
