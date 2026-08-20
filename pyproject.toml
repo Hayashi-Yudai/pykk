@@ -19,5 +19,6 @@ classifiers = [
 [dependency-groups]
 dev = [
     "maturin>=1.7.0",
+    "pytest>=9.1.1",
     "ziglang>=0.13.0",
 ]
