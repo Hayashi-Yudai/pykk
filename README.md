@@ -9,6 +9,7 @@ Python library for calculating Kramers-Kronig transform written in Rust.
 ## Requirements
 
 - Python >=3.10, <3.15
+- NumPy >=1.21
 
 ## Install
 You can install with pip command.
@@ -35,14 +36,33 @@ You can find `.whl` file in `$PROJECT_ROOT/target/wheels`. Install it by pip com
 This library has two functions for calculating Kramers-Kronig transform, the transformation from real to imaginary part and vice versa.
 
 ```python
+import numpy as np
 import pykk
 
-energy = [1, 2, 3, 4]  # the values MUST have the same intervals
-real = [1, 2, 3, 4]
+energy = np.linspace(1, 10, 1000)  # the values MUST have the same intervals
+real = 1 / (1 + (energy - 5) ** 2)
 
 imag = pykk.real2imag(energy, real)  # real -> imaginary part
 real_kk = pykk.imag2real(energy, imag)  # imaginary -> real part
 ```
+
+Both arguments accept anything `numpy.asarray` can turn into a one-dimensional array of numbers, so plain lists still work:
+
+```python
+imag = pykk.real2imag([1, 2, 3, 4], [1, 2, 3, 4])
+```
+
+The result is always a `numpy.ndarray` of `float64`, whatever the inputs were.
+
+## Test
+
+```bash
+$ uv sync
+$ uv run maturin develop
+$ uv run --no-sync pytest
+```
+
+`--no-sync` matters: a bare `uv run` reinstalls pykk from its cached wheel and would replace the module `maturin develop` just built.
 
 ## Performance
 

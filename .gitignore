@@ -2,3 +2,4 @@
 
 /target
 uv.lock
+__pycache__/
