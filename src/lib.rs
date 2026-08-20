@@ -6,6 +6,8 @@ use kk::kk::{real2imag_helper, imag2real_helper, kk_transform};
 
 #[pymodule]
 fn pykk(m: &Bound<'_, PyModule>) -> PyResult<()> {
+    m.add("__version__", env!("CARGO_PKG_VERSION"))?;
+
     let _ = m.add_function(wrap_pyfunction!(real2imag, m)?);
     let _ = m.add_function(wrap_pyfunction!(imag2real, m)?);
 
