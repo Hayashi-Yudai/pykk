@@ -6,13 +6,14 @@ readme = "README.md"
 homepage = "http://github.com/Hayashi-Yudai/pykk"
 license = "Apache-2.0"
 name = "pykk"
-version = "0.1.8"
+version = "0.2.0"
 
 [lib]
 crate-type = ["cdylib"]
 name = "pykk"
 
 [dependencies]
+numpy = "0.27"
 pyo3 = { version = "0.27", features = [
     "extension-module",
     "generate-import-lib",

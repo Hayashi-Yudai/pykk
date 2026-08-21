@@ -1,4 +1,5 @@
 .env
 
 /target
-Cargo.lock
+uv.lock
+__pycache__/
